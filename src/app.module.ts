@@ -10,7 +10,15 @@ import { PriceModule } from './price/price.module';
 import { PaymentModule } from './payment/payment.module';
 
 @Module({
-  imports: [AuthModule, CommonModule, LessonModule, OrderModule, UserModule, PriceModule, PaymentModule],
+  imports: [
+    AuthModule,
+    CommonModule,
+    LessonModule,
+    OrderModule,
+    UserModule,
+    PriceModule,
+    PaymentModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
