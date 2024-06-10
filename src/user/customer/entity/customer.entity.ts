@@ -1,5 +1,10 @@
-import { BaseModel } from 'src/common/entity/base.entity';
-import { Column, Entity } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { IsString, Length } from 'class-validator';
 import {
   BesinessType,
@@ -10,8 +15,25 @@ import {
 } from '../const/customer-enum.const';
 import { stringValidationMessage } from 'src/common/validation-message/string-validation.message';
 
+// export class CustomerModel extends BaseModel {
 @Entity()
-export class CustomerModel extends BaseModel {
+export class CustomerModel {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ default: 'test' })
+  @IsString()
+  regAdminId: string;
+
+  @Column({ default: 'test' })
+  modAdminId: string;
+
+  @CreateDateColumn()
+  regDt: Date;
+
+  @UpdateDateColumn()
+  modDt: Date;
+
   //  소비자 개인정보
 
   @Column({ nullable: false })
