@@ -5,12 +5,12 @@ import {
   ENV_DB_PASSWORD_KEY,
   ENV_DB_PORT_KEY,
   ENV_DB_USERNAME_KEY,
-} from 'src/common/const/env-keys.const';
+} from './src/common/const/env-keys.const';
 
 function ormConfig(): TypeOrmModuleOptions {
   const commonConf = {
     SYNCRONIZE: false,
-    ENTITIES: [__dirname + '**/*{.entity.ts}'],
+    ENTITIES: [__dirname + '**/entity/*.entity.{ts}'],
     MIGRATIONS: [__dirname + '/migrations/**/*{.ts,.js}'],
     CLI: {
       migrationsDir: 'src/migrations',

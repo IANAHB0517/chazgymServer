@@ -7,11 +7,27 @@ import {
   Grade,
   IsGroup,
   State,
-} from '../const/user-enum.const';
+} from '../const/customer-enum.const';
 import { stringValidationMessage } from 'src/common/validation-message/string-validation.message';
 
 @Entity()
-export class UsersModel extends BaseModel {
+export class CustomerModel extends BaseModel {
+  //  소비자 개인정보
+
+  @Column({ nullable: false })
+  name: string;
+
+  // 전화번호를 유니크로 선언할 걼인가 말 것인가?
+  // 어리신들 중에는 전화가 없으신 분들도 있을 수 있지 않을까???
+  // email을 받지 않는 상황에서 전화번호를 유니크로 하지 않으면 고유 값으로 넣어줄 컬럼이 없긴하다 그냥 id 컬럼을 사용해야 하는가
+  // 그렇다고 전화 번호를 유니크로 선언하면 만약에 법인으로 가입하신 분이 개인 회원으로 또 가입하고 싶다고 하면 어떻게 할 것인가???
+  @Column({ nullable: false, unique: true })
+  @IsString({ message: stringValidationMessage })
+  @Length(10, 11, { message: stringValidationMessage })
+  phone: string;
+
+  // partialType 으로 update DTO를 만들기 위해 선언해줘야 하는 어노테이션 partial타입으로 사용하기 위해서 부모DTo의 모든 컬럼에 선언해줘야한다고 한다. 일단은 사용해서 오류가 나서 더 알아보기 위해서 주석 처리해놓았다.
+  // @ApiProperty()
   @Column({
     type: 'enum',
     enum: IsGroup,
@@ -42,11 +58,6 @@ export class UsersModel extends BaseModel {
   @IsString({ message: stringValidationMessage })
   @Length(10, 11, { message: stringValidationMessage })
   guardianPhone: string;
-
-  @Column({ nullable: false })
-  @IsString({ message: stringValidationMessage })
-  @Length(10, 11, { message: stringValidationMessage })
-  phone: string;
 
   @Column({ nullable: true })
   @Length(0, 255, { message: stringValidationMessage })
