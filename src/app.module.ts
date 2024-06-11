@@ -11,6 +11,7 @@ import { PaymentModule } from './payment/payment.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ormConfig } from 'src/orm.config';
+import { CustomerModule } from './user/customer/customer.module';
 
 @common.Module({
   imports: [
@@ -34,6 +35,7 @@ import { ormConfig } from 'src/orm.config';
     UserModule,
     PriceModule,
     PaymentModule,
+    CustomerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
