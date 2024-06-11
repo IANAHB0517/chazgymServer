@@ -10,7 +10,7 @@ import { PriceModule } from './price/price.module';
 import { PaymentModule } from './payment/payment.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { ormConfig } from 'orm.config';
+import { ormConfig } from 'src/orm.config';
 
 @common.Module({
   imports: [

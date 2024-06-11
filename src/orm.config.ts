@@ -5,7 +5,7 @@ import {
   ENV_DB_PASSWORD_KEY,
   ENV_DB_PORT_KEY,
   ENV_DB_USERNAME_KEY,
-} from './src/common/const/env-keys.const';
+} from './common/const/env-keys.const';
 
 function ormConfig(): TypeOrmModuleOptions {
   const commonConf = {
