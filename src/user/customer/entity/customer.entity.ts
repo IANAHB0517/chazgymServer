@@ -100,3 +100,5 @@ export class CustomerModel extends BaseModel {
   })
   state: State | null;
 }
+
+// 되어라...
