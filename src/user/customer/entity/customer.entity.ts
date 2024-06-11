@@ -13,8 +13,8 @@ import { stringValidationMessage } from 'src/common/validation-message/string-va
 @Entity()
 export class CustomerModel extends BaseModel {
   //  소비자 개인정보
-
   @Column({ nullable: false })
+  @IsString()
   name: string;
 
   // 전화번호를 유니크로 선언할 걼인가 말 것인가?
@@ -34,6 +34,7 @@ export class CustomerModel extends BaseModel {
     nullable: true,
     default: null,
   })
+  @IsString()
   isGroup: IsGroup | null;
 
   @Column({
@@ -42,6 +43,7 @@ export class CustomerModel extends BaseModel {
     nullable: true,
     default: null,
   })
+  @IsString()
   besinessType: BesinessType | null;
 
   @Column({ nullable: false })
@@ -72,6 +74,7 @@ export class CustomerModel extends BaseModel {
     enum: Gender,
     nullable: false,
   })
+  @IsString()
   gender: Gender;
 
   @Column({ nullable: false })
@@ -80,10 +83,12 @@ export class CustomerModel extends BaseModel {
 
   @Column({ nullable: false })
   @Length(0, 255, { message: stringValidationMessage })
+  @IsString()
   addr: string;
 
   @Column({ nullable: false })
   @Length(0, 255, { message: stringValidationMessage })
+  @IsString()
   detailAddr: string;
 
   @Column({
@@ -91,6 +96,7 @@ export class CustomerModel extends BaseModel {
     enum: Grade,
     nullable: false,
   })
+  @IsString()
   grade: Grade | null;
 
   @Column({
@@ -98,6 +104,7 @@ export class CustomerModel extends BaseModel {
     enum: State,
     nullable: false,
   })
+  @IsString()
   state: State | null;
 }
 

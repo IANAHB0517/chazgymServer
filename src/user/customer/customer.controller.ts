@@ -1,5 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+} from '@nestjs/common';
 import { CustomerService } from './customer.service';
+import { UpdateCustomerDto } from 'src/auth/dto/update-customer.dto';
 
 @Controller('customers')
 export class CustomerController {
@@ -8,5 +17,18 @@ export class CustomerController {
   @Get()
   getCustomers() {
     return this.customerService.getAllUsers();
+  }
+
+  @Patch(':id')
+  updateCustomer(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateCustomerDto,
+  ) {
+    return this.customerService.updateCustomer(id, dto);
+  }
+
+  @Delete(':id')
+  deleteCustomer(@Param('id', ParseIntPipe) id: number) {
+    return this.customerService.deleteCustomer(id);
   }
 }

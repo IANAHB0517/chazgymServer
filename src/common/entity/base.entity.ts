@@ -4,10 +4,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsString } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 
 export abstract class BaseModel {
   @PrimaryGeneratedColumn()
+  @IsNumber()
   id: number;
 
   @Column({ default: 'test' })
@@ -15,6 +16,7 @@ export abstract class BaseModel {
   regAdminId: string;
 
   @Column({ default: 'test' })
+  @IsString()
   modAdminId: string;
 
   @CreateDateColumn()
