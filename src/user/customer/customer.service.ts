@@ -1,16 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { RegistCustomerDto } from 'src/auth/dto/regist-customer.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CustomerModel } from './entity/customer.entity';
 import { UpdateCustomerDto } from 'src/auth/dto/update-customer.dto';
+import { CustomerRepository } from './repository/customer.repository';
 
 @Injectable()
 export class CustomerService {
-  constructor(
-    @InjectRepository(CustomerModel)
-    private readonly customerRepository: Repository<CustomerModel>,
-  ) {}
+  constructor(private readonly customerRepository: CustomerRepository) {}
 
   async createCustomer(customer: RegistCustomerDto) {
     console.log('유저 생성 로직 시작');
