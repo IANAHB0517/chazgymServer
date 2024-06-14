@@ -2,14 +2,25 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { RegistCustomerDto } from 'src/auth/dto/regist-customer.dto';
 import { UpdateCustomerDto } from 'src/auth/dto/update-customer.dto';
 import { CustomerRepository } from './repository/customer.repository';
+import { QueryRunner } from 'typeorm';
+import { CustomerModel } from './entity/customer.entity';
 
 @Injectable()
 export class CustomerService {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
-  async createCustomer(customer: RegistCustomerDto) {
-    console.log('유저 생성 로직 시작');
-    const phoneExists = await this.customerRepository.exists({
+  getRepository(qr?: QueryRunner) {
+    return qr
+      ? qr.manager.getRepository(CustomerModel)
+      : this.customerRepository;
+  }
+
+  async createCustomer(customer: RegistCustomerDto, qr: QueryRunner) {
+    // qr 에서 사용할 repository 주입
+    const repository = this.getRepository(qr);
+
+    // 유저 생성 로직 시작
+    const phoneExists = await repository.exists({
       where: {
         phone: customer.phone,
       },
@@ -19,12 +30,28 @@ export class CustomerService {
       throw new BadRequestException('이미 가입된 전화번호 입니다.');
     }
 
-    const newCustomer = await this.customerRepository.create({
+    const newCustomer = await repository.create({
       ...customer,
     });
 
+    // save 하는 과정이 없어짐 ???
     await this.customerRepository.save(newCustomer);
-    return await this.getAllUsers();
+
+    // save하는 코드가 사라지면서 newCustomer의 id가 생성 되지 않았고 그로 인해서 getUserById 메서드가 작동하지 않는 오류를 겪음
+    // throw Exception을 하지 않았을 때는 response의 값이 아무것도 없는 형태였지만 Exception 처리를 통해서 Transaction Interceptor가 작동하는 것까지 확인할 수 있었다.
+    return this.getUserById(newCustomer.id);
+  }
+
+  async getUserById(id: number) {
+    const customer = await this.customerRepository.findOneBy({ id });
+
+    if (!customer) {
+      throw new BadRequestException(`해당 id의 고객이 존재하지 않습니다.`);
+    }
+
+    // 회원 생성후 해당 회원을 불러오지 못한채로 response하는 현상 발생중 타 메서드를 통해서는 잘 가져온다
+    //
+    return customer;
   }
 
   async getAllUsers() {

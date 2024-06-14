@@ -19,6 +19,11 @@ export class CustomerController {
     return this.customerService.getAllUsers();
   }
 
+  @Get(':id')
+  getCustomerById(@Param('id', ParseIntPipe) id: number) {
+    return this.customerService.getUserById(id);
+  }
+
   @Patch(':id')
   updateCustomer(
     @Param('id', ParseIntPipe) id: number,
