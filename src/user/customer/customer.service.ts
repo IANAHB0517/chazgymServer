@@ -39,6 +39,7 @@ export class CustomerService {
 
     // save하는 코드가 사라지면서 newCustomer의 id가 생성 되지 않았고 그로 인해서 getUserById 메서드가 작동하지 않는 오류를 겪음
     // throw Exception을 하지 않았을 때는 response의 값이 아무것도 없는 형태였지만 Exception 처리를 통해서 Transaction Interceptor가 작동하는 것까지 확인할 수 있었다.
+    // 추가적으로 getUserById에서 id값이 들어가지 않으면서 생성했던 트랜잭션이 롤백 되면서 id 값이 6에서 10까지 증가했고 이후 성공한 데이터의 아이디가 11로 입력되었다.
     return this.getUserById(newCustomer.id);
   }
 
