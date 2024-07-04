@@ -3,7 +3,7 @@ export enum IsGroup {
   'PERSONAL' = 'N',
 }
 
-export enum BesinessType {
+export enum BusinessType {
   'PERSONAL' = 'P',
   'CORPORATION' = 'C',
 }

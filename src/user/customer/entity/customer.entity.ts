@@ -2,7 +2,7 @@ import { BaseModel } from 'src/common/entity/base.entity';
 import { Column, Entity } from 'typeorm';
 import { IsString, Length } from 'class-validator';
 import {
-  BesinessType,
+  BusinessType,
   Gender,
   Grade,
   IsGroup,
@@ -39,12 +39,12 @@ export class CustomerModel extends BaseModel {
 
   @Column({
     type: 'enum',
-    enum: BesinessType,
+    enum: BusinessType,
     nullable: true,
     default: null,
   })
   @IsString()
-  besinessType: BesinessType | null;
+  businessType: BusinessType | null;
 
   @Column({ nullable: false })
   @IsString({ message: stringValidationMessage })

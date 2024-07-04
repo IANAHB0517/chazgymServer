@@ -43,6 +43,23 @@ export class CustomerService {
     return this.getUserById(newCustomer.id);
   }
 
+  async getUsersSearch(dto) {
+    const customers = await this.customerRepository
+      .createQueryBuilder('customer_model')
+      .from('customer_model', 'cust')
+      .where('cust.phone like :keyword', { keyword: `%${dto.keyword}%` })
+      .orWhere('cust.phone like :keyword', { keyword: `%${dto.keyword}%` })
+      .orWhere('cust.guardianName like :keyword', {
+        keyword: `%${dto.keyword}%`,
+      })
+      .orWhere('cust.guardianPhone like :keyword', {
+        keyword: `%${dto.keyword}%`,
+      })
+      .getMany();
+
+    return customers;
+  }
+
   async getUserById(id: number) {
     const customer = await this.customerRepository.findOneBy({ id });
 
